@@ -22,6 +22,7 @@ public class Plataforma {
         for (Pelicula pelicula : contenido) {
             System.out.println(pelicula.getTitulo());
         }
+        contenido.forEach(pelicula -> System.out.println(pelicula.getTitulo()));
     }
 
     public void eliminar(Pelicula elemento) {
