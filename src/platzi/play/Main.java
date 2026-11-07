@@ -12,8 +12,10 @@ public class Main {
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
     public static final int BUSCAR_POR_GENERO = 4;
-    public static final int ELIMINAR = 5;
-    public static final int SALIR = 6;
+    public static final int VER_POPULARES = 5;
+    public static final int VER_N_POPULARES = 6;
+    public static final int ELIMINAR = 7;
+    public static final int SALIR = 8;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -29,8 +31,10 @@ public class Main {
                     2. Mostrar todo
                     3. Buscar por titulo
                     4. Buscar por genero
-                    5. Eliminar
-                    6. Salir
+                    5. Ver mas populares
+                    6. Ver N mas populares
+                    7. Eliminar
+                    8. Salir
                     """);
 
             switch (opcionElegida) {
@@ -58,9 +62,28 @@ public class Main {
                     var contenidos = plataforma.buscarPorGenero(generoBuscado);
 
                     if (!contenidos.isEmpty()) {
-                        contenidos.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                        contenidos.forEach(System.out::println);
                     } else {
                         System.out.println("No hay contenido de genero " + generoBuscado + " dentro de " + plataforma.getNombre());
+                    }
+                }
+                case VER_POPULARES -> {
+                    var populares = plataforma.getPopulares();
+
+                    if (!populares.isEmpty()) {
+                        populares.forEach(System.out::println);
+                    } else {
+                        System.out.println("No hay contenido popular dentro de " + plataforma.getNombre());
+                    }
+                }
+                case VER_N_POPULARES -> {
+                    int n = ScannerUtils.capturarNumero("Ingrese el numero de las mas populares a mostrar");
+                    var populares = plataforma.getPopulares(n);
+
+                    if (!populares.isEmpty()) {
+                        populares.forEach(System.out::println);
+                    } else {
+                        System.out.println("No hay contenido popular dentro de " + plataforma.getNombre());
                     }
                 }
                 case ELIMINAR -> {

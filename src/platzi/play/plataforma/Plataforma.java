@@ -52,4 +52,17 @@ public class Plataforma {
     public int getDuracionTotal() {
         return contenido.stream().mapToInt(Pelicula::getDuracion).sum();
     }
+
+    public List<Pelicula> getPopulares() {
+        return contenido.stream()
+                .filter(Pelicula::esPopular)
+                .sorted((p1, p2) -> Double.compare(p2.getCalificacion(), p1.getCalificacion()))
+                .toList();
+    }
+
+    public List<Pelicula> getPopulares(int cantidad) {
+        return contenido.stream().sorted((p1, p2) -> Double.compare(p2.getCalificacion(), p1.getCalificacion()))
+                .limit(cantidad)
+                .toList();
+    }
 }
