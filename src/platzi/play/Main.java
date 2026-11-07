@@ -11,8 +11,9 @@ public class Main {
     public static final int AGREGAR = 1;
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
-    public static final int ELIMINAR = 4;
-    public static final int SALIR = 5;
+    public static final int BUSCAR_POR_GENERO = 4;
+    public static final int ELIMINAR = 5;
+    public static final int SALIR = 6;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -26,8 +27,9 @@ public class Main {
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar por titulo
-                    4. Eliminar
-                    5. Salir
+                    4. Buscar por genero
+                    5. Eliminar
+                    6. Salir
                     """);
 
             switch (opcionElegida) {
@@ -48,6 +50,16 @@ public class Main {
                         System.out.println(contenido.obtenerFichaTecnica());
                     } else {
                         System.out.println(nombreBuscado + " no existe dentro de " + plataforma.getNombre());
+                    }
+                }
+                case BUSCAR_POR_GENERO -> {
+                    String generoBuscado = ScannerUtils.capturarTexto("Genero del contenido a buscar");
+                    var contenidos = plataforma.buscarPorGenero(generoBuscado);
+
+                    if (!contenidos.isEmpty()) {
+                        contenidos.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                    } else {
+                        System.out.println("No hay contenido de genero " + generoBuscado + " dentro de " + plataforma.getNombre());
                     }
                 }
                 case ELIMINAR -> {
