@@ -49,4 +49,8 @@ public class Plataforma {
     public List<Pelicula> getContenido() {
         return contenido;
     }
+
+    public int getDuracionTotal() {
+        return contenido.stream().mapToInt(Pelicula::getDuracion).sum();
+    }
 }
