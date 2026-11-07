@@ -65,4 +65,16 @@ public class Plataforma {
                 .limit(cantidad)
                 .toList();
     }
+
+    public Pelicula getPeliculaMasLarga() {
+        return contenido.stream()
+                .max((p1, p2) -> Integer.compare(p1.getDuracion(), p2.getDuracion()))
+                .orElse(null);
+    }
+
+    public Pelicula getPeliculaMasCorta() {
+        return contenido.stream()
+                .min((p1, p2) -> Integer.compare(p1.getDuracion(), p2.getDuracion()))
+                .orElse(null);
+    }
 }

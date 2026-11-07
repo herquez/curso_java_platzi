@@ -14,8 +14,10 @@ public class Main {
     public static final int BUSCAR_POR_GENERO = 4;
     public static final int VER_POPULARES = 5;
     public static final int VER_N_POPULARES = 6;
-    public static final int ELIMINAR = 7;
-    public static final int SALIR = 8;
+    public static final int BUSCAR_PELICULA_MAS_LARGA = 7;
+    public static final int BUSCAR_PELICULA_MAS_CORTA = 8;
+    public static final int ELIMINAR = 9;
+    public static final int SALIR = 10;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -33,8 +35,10 @@ public class Main {
                     4. Buscar por genero
                     5. Ver mas populares
                     6. Ver N mas populares
-                    7. Eliminar
-                    8. Salir
+                    7. Buscar pelicula mas larga
+                    8. Buscar pelicula mas corta
+                    9. Eliminar
+                    10. Salir
                     """);
 
             switch (opcionElegida) {
@@ -84,6 +88,25 @@ public class Main {
                         populares.forEach(System.out::println);
                     } else {
                         System.out.println("No hay contenido popular dentro de " + plataforma.getNombre());
+                    }
+                }
+                case BUSCAR_PELICULA_MAS_LARGA -> {
+                    Pelicula peliculaMasLarga = plataforma.getPeliculaMasLarga();
+
+                    if (peliculaMasLarga != null) {
+                        System.out.println("La pelicula mas larga es: " + peliculaMasLarga.getTitulo() + " con una duracion de " + peliculaMasLarga.getDuracion() + " minutos");
+                    } else {
+                        System.out.println("No hay contenido dentro de " + plataforma.getNombre());
+                    }
+                }
+                case BUSCAR_PELICULA_MAS_CORTA ->
+                {
+                    Pelicula peliculaMasCorta = plataforma.getPeliculaMasCorta();
+
+                    if (peliculaMasCorta != null) {
+                        System.out.println("La pelicula mas corta es: " + peliculaMasCorta.getTitulo() + " con una duracion de " + peliculaMasCorta.getDuracion() + " minutos");
+                    } else {
+                        System.out.println("No hay contenido dentro de " + plataforma.getNombre());
                     }
                 }
                 case ELIMINAR -> {
