@@ -29,13 +29,10 @@ public class Plataforma {
     }
 
     public Pelicula buscarPorTitulo(String titulo) {
-        for (Pelicula pelicula : contenido) {
-            if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
-                return pelicula;
-            }
-        }
-
-        return null;
+        return contenido.stream()
+                .filter(pelicula -> pelicula.getTitulo().equalsIgnoreCase(titulo))
+                .findFirst()
+                .orElse(null);
     }
 
     public String getNombre() {
