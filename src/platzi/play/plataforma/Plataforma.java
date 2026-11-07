@@ -18,11 +18,10 @@ public class Plataforma {
         this.contenido.add(elemento);
     }
 
-    public void mostrarTitulos() {
-        for (Pelicula pelicula : contenido) {
-            System.out.println(pelicula.getTitulo());
-        }
-        contenido.forEach(pelicula -> System.out.println(pelicula.getTitulo()));
+    public List<String> getTitulos() {
+        return contenido.stream()
+                .map(Pelicula::getTitulo)
+                .toList();
     }
 
     public void eliminar(Pelicula elemento) {

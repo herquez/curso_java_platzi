@@ -42,7 +42,7 @@ public class Main {
 
                     plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
                 }
-                case MOSTRAR_TODO -> plataforma.mostrarTitulos();
+                case MOSTRAR_TODO -> plataforma.getTitulos().forEach(titulo -> System.out.println(titulo));
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
                     Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
