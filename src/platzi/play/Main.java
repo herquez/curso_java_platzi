@@ -1,6 +1,7 @@
 package platzi.play;
 
 import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Genero;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 
@@ -44,7 +45,16 @@ public class Main {
             switch (opcionElegida) {
                 case AGREGAR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-                    String genero = ScannerUtils.capturarTexto("Genero del contenido");
+                    try {
+                        Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido"));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Genero no valido. Los generos validos son: ");
+                        for (Genero genero : Genero.values()) {
+                            System.out.println("- " + genero);
+                        }
+                        break;
+                    }
+                    Genero genero = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido"));
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
 
@@ -62,7 +72,22 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    String generoBuscado = ScannerUtils.capturarTexto("Genero del contenido a buscar");
+                    System.out.println("Generos disponibles: ");
+                    for (Genero genero : Genero.values()) {
+                        System.out.println("- " + genero);
+                    }
+
+                    Genero generoBuscado;
+                    try {
+                        generoBuscado = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido a buscar:"));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Genero no valido. Los generos validos son: ");
+                        for (Genero genero : Genero.values()) {
+                            System.out.println("- " + genero);
+                        }
+                        break;
+                    }
+
                     var contenidos = plataforma.buscarPorGenero(generoBuscado);
 
                     if (!contenidos.isEmpty()) {
@@ -126,15 +151,15 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, "Animada"));
-        plataforma.agregar(new Pelicula("Inception", 148, "Ciencia Ficción"));
-        plataforma.agregar(new Pelicula("Titanic", 195, "Drama", 4.6));
-        plataforma.agregar(new Pelicula("John Wick", 101, "Acción"));
-        plataforma.agregar(new Pelicula("El Conjuro", 112, "Terror", 3.0));
-        plataforma.agregar(new Pelicula("Coco", 105, "Animada", 4.7));
-        plataforma.agregar(new Pelicula("Interstellar", 169, "Ciencia Ficción", 5));
-        plataforma.agregar(new Pelicula("Joker", 122, "Drama"));
-        plataforma.agregar(new Pelicula("Toy Story", 81, "Animada", 4.5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, "Acción", 3.9));
+        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA, 5.0));
+        plataforma.agregar(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION));
+        plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, 4.6));
+        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, 2.2));
+        plataforma.agregar(new Pelicula("El Conjuro", 112, Genero.TERROR, 4.0));
+        plataforma.agregar(new Pelicula("Coco", 105, Genero.ANIMADA, 4.7));
+        plataforma.agregar(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, 3.0));
+        plataforma.agregar(new Pelicula("Joker", 122, Genero.DRAMA, 4.6));
+        plataforma.agregar(new Pelicula("Toy Story", 81, Genero.ANIMADA, 3.5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 1.9));
     }
 }
