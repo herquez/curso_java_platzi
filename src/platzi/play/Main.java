@@ -64,7 +64,7 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                 }
-                case MOSTRAR_TODO -> plataforma.getTitulos().forEach(titulo -> System.out.println(titulo));
+                case MOSTRAR_TODO -> plataforma.getContenido().forEach(System.out::println);
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
                     Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
