@@ -6,15 +6,19 @@ import platzi.play.contenido.ResumenContenido;
 import platzi.play.exceptions.PeliculaExistenteException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Plataforma {
     private String nombre;
     private List<Pelicula> contenido; // Agregación
+    private Map<Pelicula, Integer> reproducciones;
 
     public Plataforma(String nombre) {
         this.nombre = nombre;
         this.contenido = new ArrayList<>();
+        this.reproducciones = new HashMap<>();
     }
 
     public void agregar(Pelicula elemento) throws PeliculaExistenteException {
@@ -84,5 +88,15 @@ public class Plataforma {
         return contenido.stream()
                 .min((p1, p2) -> Integer.compare(p1.getDuracion(), p2.getDuracion()))
                 .orElse(null);
+    }
+
+    public void reproducir(Pelicula pelicula) {
+        System.out.println("La pelicula " + pelicula.getTitulo() + " tiene " + reproducciones.getOrDefault(pelicula, 0) + " reproducciones.");
+        System.out.println("Reproduciendo " + pelicula.getTitulo() + "...");
+        incrementarReproducciones(pelicula);
+    }
+
+    private void incrementarReproducciones(Pelicula pelicula) {
+        reproducciones.put(pelicula, reproducciones.getOrDefault(pelicula, 0) + 1);
     }
 }
