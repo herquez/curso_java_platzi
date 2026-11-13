@@ -11,12 +11,10 @@ import java.util.List;
 public class Plataforma {
     private String nombre;
     private List<Pelicula> contenido; // Agregación
-    private List<ResumenContenido> resumenes; // Agregación
 
     public Plataforma(String nombre) {
         this.nombre = nombre;
         this.contenido = new ArrayList<>();
-        this.resumenes = new ArrayList<>();
     }
 
     public void agregar(Pelicula elemento) throws PeliculaExistenteException {
