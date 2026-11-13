@@ -2,14 +2,9 @@ package platzi.play;
 
 import platzi.play.contenido.Pelicula;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.List;
-
 import platzi.play.contenido.Genero;
 import platzi.play.plataforma.Plataforma;
+import platzi.play.util.FileUtils;
 import platzi.play.util.ScannerUtils;
 
 public class Main {
@@ -174,24 +169,12 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        try {
-            List<String> lineas = Files.readAllLines(Paths.get("contenido.txt"));
-            lineas.forEach(linea -> {
-                String[] partes = linea.split("|");
-                String titulo = partes[0].trim();
-                int duracion = Integer.parseInt(partes[1].trim());
-                Genero genero = Genero.valueOf(partes[2].trim().toUpperCase());
-                double calificacion = partes[3].isBlank() ? 0.0 : Double.parseDouble(partes[3]);
-                LocalDate fechaEstreno = LocalDate.parse(partes[4].trim());
-
-                try {
-                    plataforma.agregar(new Pelicula(titulo, duracion, genero, calificacion, fechaEstreno));
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo de contenido: " + e.getMessage());
-        }
+        FileUtils.leerContenido().forEach(pelicula -> {
+            try {
+                plataforma.agregar(pelicula);
+            } catch (Exception e) {
+                System.out.println("Error al agregar la película: " + e.getMessage());
+            }
+        });
     }
 }
