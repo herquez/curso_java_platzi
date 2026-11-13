@@ -17,8 +17,9 @@ public class Main {
     public static final int VER_N_POPULARES = 6;
     public static final int BUSCAR_PELICULA_MAS_LARGA = 7;
     public static final int BUSCAR_PELICULA_MAS_CORTA = 8;
-    public static final int ELIMINAR = 9;
-    public static final int SALIR = 10;
+    public static final int REPRODUCIR = 9;
+    public static final int ELIMINAR = 10;
+    public static final int SALIR = 11;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -38,8 +39,9 @@ public class Main {
                     6. Ver N mas populares
                     7. Buscar pelicula mas larga
                     8. Buscar pelicula mas corta
-                    9. Eliminar
-                    10. Salir
+                    9. Reproducir contenido
+                    10. Eliminar
+                    11. Salir
                     """);
 
             switch (opcionElegida) {
@@ -136,6 +138,16 @@ public class Main {
                         System.out.println("La pelicula mas corta es: " + peliculaMasCorta.getTitulo() + " con una duracion de " + peliculaMasCorta.getDuracion() + " minutos");
                     } else {
                         System.out.println("No hay contenido dentro de " + plataforma.getNombre());
+                    }
+                }
+                case REPRODUCIR -> {
+                    String nombreAReproducir = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAReproducir);
+
+                    if (contenido != null) {
+                        plataforma.reproducir(contenido);
+                    } else {
+                        System.out.println(nombreAReproducir + " no existe dentro de " + plataforma.getNombre());
                     }
                 }
                 case ELIMINAR -> {
