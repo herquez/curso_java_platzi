@@ -24,6 +24,11 @@ public class Pelicula {
         this.calificar(calificacion);
     }
 
+    public Pelicula(String titulo, int duracion, Genero genero, double calificacion, LocalDate fechaEstreno) {
+        this(titulo, duracion, genero, calificacion);
+        this.fechaEstreno = fechaEstreno;
+    }
+
     public void reproducir() {
         System.out.println("Reproduciendo " + titulo);
     }

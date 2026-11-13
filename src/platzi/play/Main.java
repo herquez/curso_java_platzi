@@ -1,6 +1,13 @@
 package platzi.play;
 
 import platzi.play.contenido.Pelicula;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.List;
+
 import platzi.play.contenido.Genero;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
@@ -168,18 +175,23 @@ public class Main {
 
     private static void cargarPeliculas(Plataforma plataforma) {
         try {
-            plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA, 5.0));
-            plataforma.agregar(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION));
-            plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, 4.6));
-            plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, 2.2));
-            plataforma.agregar(new Pelicula("El Conjuro", 112, Genero.TERROR, 4.0));
-            plataforma.agregar(new Pelicula("Coco", 105, Genero.ANIMADA, 4.7));
-            plataforma.agregar(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, 3.0));
-            plataforma.agregar(new Pelicula("Joker", 122, Genero.DRAMA, 4.6));
-            plataforma.agregar(new Pelicula("Toy Story", 81, Genero.ANIMADA, 3.5));
-            plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 1.9));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            List<String> lineas = Files.readAllLines(Paths.get("contenido.txt"));
+            lineas.forEach(linea -> {
+                String[] partes = linea.split("|");
+                String titulo = partes[0].trim();
+                int duracion = Integer.parseInt(partes[1].trim());
+                Genero genero = Genero.valueOf(partes[2].trim().toUpperCase());
+                double calificacion = partes[3].isBlank() ? 0.0 : Double.parseDouble(partes[3]);
+                LocalDate fechaEstreno = LocalDate.parse(partes[4].trim());
+
+                try {
+                    plataforma.agregar(new Pelicula(titulo, duracion, genero, calificacion, fechaEstreno));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de contenido: " + e.getMessage());
         }
     }
 }
