@@ -3,6 +3,7 @@ package platzi.play.util;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,27 @@ public class FileUtils {
     public static final String FILE_PATH = "contenido.txt";
     public static final String SPLITTER = "\\|";
 
+    public static void escribirContenido(Pelicula pelicula) {
+        String linea = String.join(SPLITTER,
+                pelicula.getTitulo(),
+                String.valueOf(pelicula.getDuracion()),
+                pelicula.getGenero().name(),
+                String.valueOf(pelicula.getCalificacion()),
+                pelicula.getFechaEstreno().toString());
+
+        try {
+            Files.writeString(
+                    Paths.get(FILE_PATH),
+                    linea,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println(
+                    "Error al escribir en el archivo de contenido: "
+                            + e.getMessage());
+        }
+    }
+
     public static List<Pelicula> leerContenido() {
         List<Pelicula> peliculas = new ArrayList<>();
 
@@ -24,14 +46,19 @@ public class FileUtils {
                 String titulo = partes[0].trim();
                 int duracion = Integer.parseInt(partes[1].trim());
                 Genero genero = Genero.valueOf(partes[2].trim().toUpperCase());
-                double calificacion = partes[3].isBlank() ? 0.0 : Double.parseDouble(partes[3]);
+                double calificacion = partes[3].isBlank()
+                        ? 0.0
+                        : Double.parseDouble(partes[3]);
                 LocalDate fechaEstreno = LocalDate.parse(partes[4].trim());
 
-                peliculas.add(new Pelicula(titulo, duracion, genero, calificacion, fechaEstreno));
+                peliculas.add(new Pelicula(
+                        titulo, duracion, genero, calificacion, fechaEstreno));
             });
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo de contenido: " + e.getMessage());
+            System.out.println(
+                    "Error al leer el archivo de contenido: " + e.getMessage());
         }
+
         return peliculas;
     }
 }
