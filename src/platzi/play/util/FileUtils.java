@@ -26,7 +26,7 @@ public class FileUtils {
         try {
             Files.writeString(
                     Paths.get(FILE_PATH),
-                    linea,
+                    linea + System.lineSeparator(),
                     StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND);
         } catch (IOException e) {
