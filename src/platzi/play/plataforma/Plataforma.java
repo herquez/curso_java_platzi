@@ -4,6 +4,7 @@ import platzi.play.contenido.Genero;
 import platzi.play.contenido.Pelicula;
 import platzi.play.contenido.ResumenContenido;
 import platzi.play.exceptions.PeliculaExistenteException;
+import platzi.play.util.FileUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class Plataforma {
             throw new PeliculaExistenteException(elemento.getTitulo());
         }
         this.contenido.add(elemento);
+        FileUtils.escribirContenido(elemento);
     }
 
     public List<String> getTitulos() {
@@ -40,7 +42,8 @@ public class Plataforma {
 
     public Pelicula buscarPorTitulo(String titulo) {
         return contenido.stream()
-                .filter(pelicula -> pelicula.getTitulo().equalsIgnoreCase(titulo))
+                .filter(pelicula ->
+                    pelicula.getTitulo().equalsIgnoreCase(titulo))
                 .findFirst()
                 .orElse(null);
     }
@@ -57,7 +60,9 @@ public class Plataforma {
 
     public List<ResumenContenido> getContenido() {
         return contenido.stream()
-                .map(p -> new ResumenContenido(p.getTitulo(), p.getDuracion(), p.getGenero()))
+                .map(p ->
+                    new ResumenContenido(p.getTitulo(),
+                    p.getDuracion(), p.getGenero()))
                 .toList();
     }
 
@@ -68,35 +73,45 @@ public class Plataforma {
     public List<Pelicula> getPopulares() {
         return contenido.stream()
                 .filter(Pelicula::esPopular)
-                .sorted((p1, p2) -> Double.compare(p2.getCalificacion(), p1.getCalificacion()))
+                .sorted((p1, p2) ->
+                Double.compare(p2.getCalificacion(), p1.getCalificacion()))
                 .toList();
     }
 
     public List<Pelicula> getPopulares(int cantidad) {
-        return contenido.stream().sorted((p1, p2) -> Double.compare(p2.getCalificacion(), p1.getCalificacion()))
+        return contenido.stream().sorted((p1, p2) ->
+                    Double.compare(p2.getCalificacion(), p1.getCalificacion()))
                 .limit(cantidad)
                 .toList();
     }
 
     public Pelicula getPeliculaMasLarga() {
         return contenido.stream()
-                .max((p1, p2) -> Integer.compare(p1.getDuracion(), p2.getDuracion()))
+                .max((p1, p2) ->
+                    Integer.compare(p1.getDuracion(), p2.getDuracion()))
                 .orElse(null);
     }
 
     public Pelicula getPeliculaMasCorta() {
         return contenido.stream()
-                .min((p1, p2) -> Integer.compare(p1.getDuracion(), p2.getDuracion()))
+                .min((p1, p2) ->
+                    Integer.compare(p1.getDuracion(), p2.getDuracion()))
                 .orElse(null);
     }
 
     public void reproducir(Pelicula pelicula) {
-        System.out.println("La pelicula " + pelicula.getTitulo() + " tiene " + reproducciones.getOrDefault(pelicula, 0) + " reproducciones.");
+        System.out.println(
+            "La pelicula " +
+            pelicula.getTitulo() +
+            " tiene " +
+            reproducciones.getOrDefault(pelicula, 0) +
+            " reproducciones.");
         System.out.println("Reproduciendo " + pelicula.getTitulo() + "...");
         incrementarReproducciones(pelicula);
     }
 
     private void incrementarReproducciones(Pelicula pelicula) {
-        reproducciones.put(pelicula, reproducciones.getOrDefault(pelicula, 0) + 1);
+        reproducciones.put(
+            pelicula, reproducciones.getOrDefault(pelicula, 0) + 1);
     }
 }
