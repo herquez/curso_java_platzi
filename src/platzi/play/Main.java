@@ -61,9 +61,10 @@ public class Main {
                     Genero genero = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido"));
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
-
+                    Pelicula peliculaNueva = new Pelicula(nombre, duracion, genero, calificacion);
                     try {
-                        plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
+                        plataforma.agregar(peliculaNueva);
+                        FileUtils.escribirContenido(peliculaNueva);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }

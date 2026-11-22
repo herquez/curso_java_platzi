@@ -16,7 +16,7 @@ public class FileUtils {
     public static final String SPLITTER = "\\|";
 
     public static void escribirContenido(Pelicula pelicula) {
-        String linea = String.join(SPLITTER,
+        String linea = String.join("|",
                 pelicula.getTitulo(),
                 String.valueOf(pelicula.getDuracion()),
                 pelicula.getGenero().name(),
