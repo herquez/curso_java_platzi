@@ -1,7 +1,7 @@
 package platzi.play;
 
 import platzi.play.contenido.Contenido;
-
+import platzi.play.contenido.Documental;
 import platzi.play.contenido.Genero;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.FileUtils;
@@ -48,7 +48,14 @@ public class Main {
 
             switch (opcionElegida) {
                 case AGREGAR -> {
+                    int tipoContenido = ScannerUtils.capturarNumero("""
+                            Ingrese el tipo de contenido a agregar:
+                            1. Pelicula
+                            2. Documental
+                            """);
+
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
+
                     Genero genero;
                     String mensaje_agregar_genero = "Los generos disponibles son:\n";
                     for (Genero g : Genero.values()) {
@@ -64,9 +71,19 @@ public class Main {
                         }
                         break;
                     }
+
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
-                    Contenido peliculaNueva = new Contenido(nombre, duracion, genero, calificacion);
+
+                    Contenido peliculaNueva;
+
+                    if(tipoContenido == 2) {
+                        String narrador = ScannerUtils.capturarTexto("Nombre del narrador:");
+                        peliculaNueva = new Documental(nombre, duracion, genero, calificacion, narrador);
+                    } else {
+                        peliculaNueva = new Contenido(nombre, duracion, genero, calificacion);
+                    }
+                    
                     try {
                         plataforma.agregar(peliculaNueva);
                         FileUtils.escribirContenido(peliculaNueva);
