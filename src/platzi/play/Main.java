@@ -49,16 +49,21 @@ public class Main {
             switch (opcionElegida) {
                 case AGREGAR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
+                    Genero genero;
+                    String mensaje_agregar_genero = "Los generos disponibles son:\n";
+                    for (Genero g : Genero.values()) {
+                        mensaje_agregar_genero += g + "\n";
+                    }
+                    mensaje_agregar_genero += "Ingrese el genero del contenido:";
                     try {
-                        Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido"));
+                        genero = Genero.valueOf(ScannerUtils.capturarTexto(mensaje_agregar_genero));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Genero no valido. Los generos validos son: ");
-                        for (Genero genero : Genero.values()) {
-                            System.out.println("- " + genero);
+                        for (Genero g : Genero.values()) {
+                            System.out.println("- " + g);
                         }
                         break;
                     }
-                    Genero genero = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido"));
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
                     Pelicula peliculaNueva = new Pelicula(nombre, duracion, genero, calificacion);
