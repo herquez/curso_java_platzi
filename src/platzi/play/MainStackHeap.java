@@ -1,6 +1,6 @@
 package platzi.play;
 
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Contenido;
 
 public class MainStackHeap {
     public static void main(String[] args) {

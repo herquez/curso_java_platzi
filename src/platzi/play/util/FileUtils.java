@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import platzi.play.contenido.Genero;
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Contenido;
 
 public class FileUtils {
     public static final String FILE_PATH = "contenido.txt";
     public static final String SPLITTER = "\\|";
 
-    public static void escribirContenido(Pelicula pelicula) {
+    public static void escribirContenido(Contenido pelicula) {
         String linea = String.join("|",
                 pelicula.getTitulo(),
                 String.valueOf(pelicula.getDuracion()),
@@ -36,8 +36,8 @@ public class FileUtils {
         }
     }
 
-    public static List<Pelicula> leerContenido() {
-        List<Pelicula> peliculas = new ArrayList<>();
+    public static List<Contenido> leerContenido() {
+        List<Contenido> peliculas = new ArrayList<>();
 
         try {
             List<String> lineas = Files.readAllLines(Paths.get(FILE_PATH));
@@ -51,7 +51,7 @@ public class FileUtils {
                         : Double.parseDouble(partes[3]);
                 LocalDate fechaEstreno = LocalDate.parse(partes[4].trim());
 
-                peliculas.add(new Pelicula(
+                peliculas.add(new Contenido(
                         titulo, duracion, genero, calificacion, fechaEstreno));
             });
         } catch (IOException e) {

@@ -1,7 +1,7 @@
 package platzi.play.plataforma;
 
 import platzi.play.contenido.Genero;
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Contenido;
 import platzi.play.contenido.ResumenContenido;
 import platzi.play.exceptions.PeliculaExistenteException;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class Plataforma {
     private String nombre;
-    private List<Pelicula> contenido; // Agregación
-    private Map<Pelicula, Integer> reproducciones;
+    private List<Contenido> contenido; // Agregación
+    private Map<Contenido, Integer> reproducciones;
 
     public Plataforma(String nombre) {
         this.nombre = nombre;
@@ -21,7 +21,7 @@ public class Plataforma {
         this.reproducciones = new HashMap<>();
     }
 
-    public void agregar(Pelicula elemento) throws PeliculaExistenteException {
+    public void agregar(Contenido elemento) throws PeliculaExistenteException {
         if (buscarPorTitulo(elemento.getTitulo()) != null) {
             throw new PeliculaExistenteException(elemento.getTitulo());
         }
@@ -30,15 +30,15 @@ public class Plataforma {
 
     public List<String> getTitulos() {
         return contenido.stream()
-                .map(Pelicula::getTitulo)
+                .map(Contenido::getTitulo)
                 .toList();
     }
 
-    public void eliminar(Pelicula elemento) {
+    public void eliminar(Contenido elemento) {
         this.contenido.remove(elemento);
     }
 
-    public Pelicula buscarPorTitulo(String titulo) {
+    public Contenido buscarPorTitulo(String titulo) {
         return contenido.stream()
                 .filter(pelicula ->
                     pelicula.getTitulo().equalsIgnoreCase(titulo))
@@ -46,7 +46,7 @@ public class Plataforma {
                 .orElse(null);
     }
 
-    public List<Pelicula> buscarPorGenero(Genero genero) {
+    public List<Contenido> buscarPorGenero(Genero genero) {
         return contenido.stream()
                 .filter(pelicula -> pelicula.getGenero().equals(genero))
                 .toList();
@@ -65,39 +65,39 @@ public class Plataforma {
     }
 
     public int getDuracionTotal() {
-        return contenido.stream().mapToInt(Pelicula::getDuracion).sum();
+        return contenido.stream().mapToInt(Contenido::getDuracion).sum();
     }
 
-    public List<Pelicula> getPopulares() {
+    public List<Contenido> getPopulares() {
         return contenido.stream()
-                .filter(Pelicula::esPopular)
+                .filter(Contenido::esPopular)
                 .sorted((p1, p2) ->
                 Double.compare(p2.getCalificacion(), p1.getCalificacion()))
                 .toList();
     }
 
-    public List<Pelicula> getPopulares(int cantidad) {
+    public List<Contenido> getPopulares(int cantidad) {
         return contenido.stream().sorted((p1, p2) ->
                     Double.compare(p2.getCalificacion(), p1.getCalificacion()))
                 .limit(cantidad)
                 .toList();
     }
 
-    public Pelicula getPeliculaMasLarga() {
+    public Contenido getPeliculaMasLarga() {
         return contenido.stream()
                 .max((p1, p2) ->
                     Integer.compare(p1.getDuracion(), p2.getDuracion()))
                 .orElse(null);
     }
 
-    public Pelicula getPeliculaMasCorta() {
+    public Contenido getPeliculaMasCorta() {
         return contenido.stream()
                 .min((p1, p2) ->
                     Integer.compare(p1.getDuracion(), p2.getDuracion()))
                 .orElse(null);
     }
 
-    public void reproducir(Pelicula pelicula) {
+    public void reproducir(Contenido pelicula) {
         System.out.println(
             "La pelicula " +
             pelicula.getTitulo() +
@@ -108,7 +108,7 @@ public class Plataforma {
         incrementarReproducciones(pelicula);
     }
 
-    private void incrementarReproducciones(Pelicula pelicula) {
+    private void incrementarReproducciones(Contenido pelicula) {
         reproducciones.put(
             pelicula, reproducciones.getOrDefault(pelicula, 0) + 1);
     }

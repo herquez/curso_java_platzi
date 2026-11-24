@@ -2,7 +2,7 @@ package platzi.play.contenido;
 
 import java.time.LocalDate;
 
-public class Pelicula {
+public class Contenido {
     private String titulo;
     private String descripcion;
     private int duracion;
@@ -11,7 +11,7 @@ public class Pelicula {
     private double calificacion;
     private boolean disponible;
 
-    public Pelicula(String titulo, int duracion, Genero genero) {
+    public Contenido(String titulo, int duracion, Genero genero) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
@@ -19,12 +19,12 @@ public class Pelicula {
         this.disponible = true;
     }
 
-    public Pelicula(String titulo, int duracion, Genero genero, double calificacion) {
+    public Contenido(String titulo, int duracion, Genero genero, double calificacion) {
         this(titulo, duracion, genero);
         this.calificar(calificacion);
     }
 
-    public Pelicula(String titulo, int duracion, Genero genero, double calificacion, LocalDate fechaEstreno) {
+    public Contenido(String titulo, int duracion, Genero genero, double calificacion, LocalDate fechaEstreno) {
         this(titulo, duracion, genero, calificacion);
         this.fechaEstreno = fechaEstreno;
     }

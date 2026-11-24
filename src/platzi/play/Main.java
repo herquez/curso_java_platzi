@@ -1,6 +1,6 @@
 package platzi.play;
 
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Contenido;
 
 import platzi.play.contenido.Genero;
 import platzi.play.plataforma.Plataforma;
@@ -66,7 +66,7 @@ public class Main {
                     }
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
-                    Pelicula peliculaNueva = new Pelicula(nombre, duracion, genero, calificacion);
+                    Contenido peliculaNueva = new Contenido(nombre, duracion, genero, calificacion);
                     try {
                         plataforma.agregar(peliculaNueva);
                         FileUtils.escribirContenido(peliculaNueva);
@@ -77,7 +77,7 @@ public class Main {
                 case MOSTRAR_TODO -> plataforma.getContenido().forEach(System.out::println);
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreBuscado);
 
                     if (contenido != null) {
                         System.out.println(contenido.obtenerFichaTecnica());
@@ -130,7 +130,7 @@ public class Main {
                     }
                 }
                 case BUSCAR_PELICULA_MAS_LARGA -> {
-                    Pelicula peliculaMasLarga = plataforma.getPeliculaMasLarga();
+                    Contenido peliculaMasLarga = plataforma.getPeliculaMasLarga();
 
                     if (peliculaMasLarga != null) {
                         System.out.println("La pelicula mas larga es: " + peliculaMasLarga.getTitulo() + " con una duracion de " + peliculaMasLarga.getDuracion() + " minutos");
@@ -140,7 +140,7 @@ public class Main {
                 }
                 case BUSCAR_PELICULA_MAS_CORTA ->
                 {
-                    Pelicula peliculaMasCorta = plataforma.getPeliculaMasCorta();
+                    Contenido peliculaMasCorta = plataforma.getPeliculaMasCorta();
 
                     if (peliculaMasCorta != null) {
                         System.out.println("La pelicula mas corta es: " + peliculaMasCorta.getTitulo() + " con una duracion de " + peliculaMasCorta.getDuracion() + " minutos");
@@ -150,7 +150,7 @@ public class Main {
                 }
                 case REPRODUCIR -> {
                     String nombreAReproducir = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAReproducir);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreAReproducir);
 
                     if (contenido != null) {
                         plataforma.reproducir(contenido);
@@ -160,7 +160,7 @@ public class Main {
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
                     if (contenido != null) {
                         plataforma.eliminar(contenido);
